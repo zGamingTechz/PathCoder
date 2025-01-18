@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Haha</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Roadmap Tasks</h1>
+
+    {% if tasks|length < 1 %}
+        <h4 style="text-align: center;">No Tasks</h4>
+    {% else %}
+
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}   
+            <tr>
+                <th>{{ task.content }}</th>
+                <th>
+                    <a href="/delete/{{ task.id }}">Delete</a>
+                    <br>
+                    <a href="/update/{{ task.id }}">Update</a>
+                </th>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <form action="/" method="post">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Task">
+    </form>
+
+    <h2 style="text-align: center; margin-top: 20px;">By Bhavya Soni</h2>
+</div>
+{% endblock %}
