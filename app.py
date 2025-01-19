@@ -51,7 +51,7 @@ def home():
     return redirect(url_for('register'))
 
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/questions', methods=['GET', 'POST'])
 def index():
     user = User.query.filter(User.email == session['user_email']).first()
 
@@ -59,7 +59,7 @@ def index():
         retrieve_and_grade(request)
         return redirect(url_for('home'))
     else:
-        return render_template('index.html', user=user)
+        return render_template('questions.html', user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -73,7 +73,7 @@ def login():
             if check.password == password:
                 session['logged_in'] = True
                 session['user_email'] = check.email
-                return redirect(url_for('index'))
+                return redirect('/questions')
             else:
                 return render_template("login.html", error = 'Incorrect password')
         else:
@@ -110,7 +110,7 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 session['logged_in'] = True
-                return redirect('/index')
+                return redirect('/questions')
             except Exception as e:
                 return f"Error in adding user: {str(e)}"
         else:
