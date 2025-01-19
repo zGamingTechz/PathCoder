@@ -37,7 +37,7 @@ class User(db.Model):
     
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def home():
 
     # REMOVEEEE !!!!!!!!
     #session["logged_in"] = False
@@ -45,12 +45,20 @@ def index():
 
     user = User.query.filter(User.email == session['user_email']).first()
 
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('home.html', user=user)
+    return redirect(url_for('register'))
+
+
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    user = User.query.filter(User.email == session['user_email']).first()
+
     if request.method == "POST":
         retrieve_and_grade(request)
+        return redirect(url_for('home'))
     else:
-        if 'logged_in' in session and session['logged_in']:
-            return render_template('index.html', user=user)
-        return redirect(url_for('register'))
+        return render_template('index.html', user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -99,7 +107,7 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 session['logged_in'] = True
-                return redirect('/')
+                return redirect('/index')
             except Exception as e:
                 return f"Error in adding user: {str(e)}"
         else:
