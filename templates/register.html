@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+    <title>Register - PathCoder</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-container">
+            <h2>Register</h2>
+            <form method="POST" action="/register">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <label for="language">Preferred Coding Language</label>
+                <input type="text" id="language" name="language" required>
+
+                <label for="experience">Experience Level</label>
+                <select id="experience" name="experience" required>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </select>
+
+                <button type="submit">Register</button>
+            </form>
+            <p class="redirect-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </div>
+{% endblock %}

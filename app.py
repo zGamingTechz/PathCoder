@@ -1,17 +1,19 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import requests
+import keys
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
+app.config['SECRET_KEY'] = keys.secret_key
 db = SQLAlchemy(app)
 url = "https://zenquotes.io/api/random"
 
 
 # ToDo database
 class ToDo(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     content = db.Column(db.String, nullable = False)
 
     def __repr__(self):
@@ -20,19 +22,22 @@ class ToDo(db.Model):
 
 # User database
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False)
     password = db.Column(db.String, nullable = False)
     quote = db.Column(db.String, default=requests.get(url).json()[0]['q'])
     language = db.Column(db.String, nullable=False)
     experience = db.Column(db.String, nullable = False)
-    score = db.Column(db.Integer, nullable = False)
+    score = db.Column(db.Integer, default = 0)
+
+    def __repr__(self):
+        return f'<User {self.id} - {self.name}>'
     
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == "POST":
+    '''if request.method == "POST":
         task_content = request.form['content']
         new_task = ToDo(content=task_content)
 
@@ -44,8 +49,62 @@ def index():
             return "Error in adding task"
     else:
         tasks = ToDo.query.order_by(ToDo.id).all()
-        return render_template("index.html", tasks = tasks)
+        return render_template("index.html", tasks = tasks)'''
     
+
+    # REMOVEEEE !!!!!!!!
+    #session["logged_in"] = False
+    # REMOVEEE  !!!!!!!!!!!!!!
+
+    
+    if 'logged_in' in session:
+        if session['logged_in'] == True:
+            return render_template('index.html')
+    return redirect(url_for('register'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+    return render_template("login.html")
+    
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        language = request.form['language']
+        experience = request.form['experience']
+
+        new_user = User(
+            name=name,
+            email=email,
+            password=password,
+            language=language,
+            experience=experience
+        )
+
+        if password != confirm_password:
+            return render_template("register.html")
+
+        print('User info: ', new_user)
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            session['logged_in'] = True
+            return redirect('/')
+        except Exception as e:
+            return f"Error in adding user: {str(e)}"
+    else:
+        return render_template("register.html")
+
 
 @app.route('/delete/<int:id>')
 def delete(id):
