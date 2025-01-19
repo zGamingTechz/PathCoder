@@ -83,3 +83,9 @@ input:focus, select:focus {
 .redirect-link a:hover {
     text-decoration: underline;
 }
+
+h4 {
+    text-align: center;
+    color: red;
+    margin-top: 20px;
+}

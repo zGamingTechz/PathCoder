@@ -32,7 +32,7 @@ class User(db.Model):
     score = db.Column(db.Integer, default = 0)
 
     def __repr__(self):
-        return f'<User {self.id} - {self.name}>'
+        return f'<User {self.id}:\n{self.name}\n{self.email}\n{self.password}\n{self.quote}\n{self.language}\n{self.experience}\n{self.score}>'
     
 
 @app.route('/', methods=['GET', 'POST'])
@@ -55,11 +55,11 @@ def index():
     # REMOVEEEE !!!!!!!!
     #session["logged_in"] = False
     # REMOVEEE  !!!!!!!!!!!!!!
-
+    user = User.query.filter(User.email == session['user_email']).first()
+    print(user)
     
-    if 'logged_in' in session:
-        if session['logged_in'] == True:
-            return render_template('index.html')
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('index.html', user=user)
     return redirect(url_for('register'))
 
 
@@ -69,7 +69,17 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-    return render_template("login.html")
+        check = User.query.filter(User.email == email).first()
+        if check is not None:
+            if check.password == password:
+                session['logged_in'] = True
+                session['user_email'] = check.email
+                return redirect(url_for('index'))
+            else:
+                return render_template("login.html", error = 'Incorrect password')
+        else:
+            return render_template("login.html", error = 'User not found')
+    return render_template("login.html", error = '')
     
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -82,26 +92,30 @@ def register():
         language = request.form['language']
         experience = request.form['experience']
 
-        new_user = User(
-            name=name,
-            email=email,
-            password=password,
-            language=language,
-            experience=experience
-        )
+        existing_user = User.query.filter(User.email == email).first()
+        if existing_user is None:
+            new_user = User(
+                name=name,
+                email=email,
+                password=password,
+                language=language,
+                experience=experience
+            )
 
-        if password != confirm_password:
-            return render_template("register.html")
+            if password != confirm_password:
+                return render_template("register.html")
 
-        print('User info: ', new_user)
+            print('User info: ', new_user)
 
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            session['logged_in'] = True
-            return redirect('/')
-        except Exception as e:
-            return f"Error in adding user: {str(e)}"
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                session['logged_in'] = True
+                return redirect('/')
+            except Exception as e:
+                return f"Error in adding user: {str(e)}"
+        else:
+            return render_template("register.html", error = 'Email already in use')
     else:
         return render_template("register.html")
 
