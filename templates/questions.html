@@ -19,75 +19,59 @@
         <h2>Answer the Questions</h2>
         <form action="/questions" method="POST">
             <div class="scrollable-questions">
-                <label for="q1">1. How familiar are you with coding?</label>
+                <label for="q1">1. Do you understand SQL (Structured Query Language) and NoSQL databases?</label>
                 <select id="q1" name="q1" required>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
                 
-                <label for="q2">2. What coding language do you want to learn?</label>
+                <label for="q2">2. Do you understand object-oriented programming (OOP)?</label>
                 <select id="q2" name="q2" required>
-                    <option value="Python">Python</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Java">Java</option>
-                    <option value="C++">C++</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q3">3. What is your preferred learning style?</label>
+                <label for="q3">3. Do you understand how memory management works in programming (e.g., stack vs. heap)?</label>
                 <select id="q3" name="q3" required>
-                    <option value="Visual">Visual</option>
-                    <option value="Auditory">Auditory</option>
-                    <option value="Kinesthetic">Kinesthetic</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q4">4. Do you prefer learning through videos or books?</label>
+                <label for="q4">4. Do you know the concept of big-O notation in algorithm analysis?</label>
                 <select id="q4" name="q4" required>
-                    <option value="Videos">Videos</option>
-                    <option value="Books">Books</option>
-                    <option value="Both">Both</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q5">5. What is your experience level in programming?</label>
+                <label for="q5">5. Do you understand the concept of recursion in programming?</label>
                 <select id="q5" name="q5" required>
-                    <option value="None">None</option>
-                    <option value="Some">Some</option>
-                    <option value="Extensive">Extensive</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q6">6. Do you prefer working on projects or learning theory?</label>
+                <label for="q6">6. Do you know how to implement basic data structures like arrays, linked lists, and trees?</label>
                 <select id="q6" name="q6" required>
-                    <option value="Projects">Projects</option>
-                    <option value="Theory">Theory</option>
-                    <option value="Both">Both</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q7">7. What is your goal for learning to code?</label>
+                <label for="q7">7. Do you know how to use Git and Github?</label>
                 <select id="q7" name="q7" required>
-                    <option value="Job">Job</option>
-                    <option value="Hobby">Hobby</option>
-                    <option value="Both">Both</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
 
-                <label for="q8">8. How much time can you commit to learning coding weekly?</label>
+                <label for="q8">8. Do you know how to work with APIs (Application Programming Interfaces) in programming?</label>
                 <select id="q8" name="q8" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+
+                <label for="q9">9. How much time can you commit to learning coding weekly?</label>
+                <select id="q9" name="q9" required>
                     <option value="Less than 5 hours">Less than 5 hours</option>
                     <option value="5-10 hours">5-10 hours</option>
                     <option value="10+ hours">10+ hours</option>
-                </select>
-
-                <label for="q9">9. Do you prefer a structured curriculum or free-form learning?</label>
-                <select id="q9" name="q9" required>
-                    <option value="Structured">Structured</option>
-                    <option value="Free-form">Free-form</option>
-                    <option value="Both">Both</option>
-                </select>
-
-                <label for="q10">10. Do you prefer learning alone or in a group?</label>
-                <select id="q10" name="q10" required>
-                    <option value="Alone">Alone</option>
-                    <option value="Group">Group</option>
-                    <option value="Both">Both</option>
                 </select>
             </div>
             <button type="submit">Submit</button>

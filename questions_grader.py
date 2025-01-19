@@ -8,6 +8,5 @@ def retrieve_and_grade(request):
     q7 = request.form['q7']
     q8 = request.form['q8']        
     q9 = request.form['q9']
-    q10 = request.form['q10']
 
     print(q1)
