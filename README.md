@@ -4,8 +4,8 @@
 
 ## Features
 
-- **Personalized Learning Roadmap**: Generate a custom roadmap for learning any programming language (e.g., Python, JavaScript, etc.) based on your current skill level and goals.
+- **Personalized Learning Roadmap**: Generate a custom roadmap for learning any programming language and career path (e.g., Python, JavaScript, Game Dev, etc.) based on your current skill level and goals.
 - **Task Tracking**: Track your progress by adding, updating, and deleting tasks as you work through your roadmap.
-- **AI-Powered**: Uses OpenAI's API to generate a tailored learning plan based on your input.
+- **AI-Powered**: Uses AI to generate a tailored learning plan based on your input.
 - **User-Friendly Interface**: Simple and intuitive design for seamless interaction.
 - **Progress Monitoring**: Stay on track with an interactive to-do list for each roadmap task.
