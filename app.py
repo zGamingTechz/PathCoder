@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from questions_grader import retrieve_and_grade
 import requests
 import keys
 
@@ -45,16 +46,7 @@ def index():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
-        q1 = request.form['q1']
-        q2 = request.form['q2']
-        q3 = request.form['q3']
-        q4 = request.form['q4']
-        q5 = request.form['q5']
-        q6 = request.form['q6']
-        q7 = request.form['q7']
-        q8 = request.form['q8']        
-        q9 = request.form['q9']
-        q10 = request.form['q10']
+        retrieve_and_grade(request)
     else:
         if 'logged_in' in session and session['logged_in']:
             return render_template('index.html', user=user)
