@@ -29,6 +29,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable = False)
     quote = db.Column(db.String, default=requests.get(url).json()[0]['q'])
     language = db.Column(db.String, nullable=False)
+    path = db.Column(db.String, nullable = False)
     experience = db.Column(db.String, nullable = False)
     score = db.Column(db.Integer, default = 0)
 
@@ -88,6 +89,7 @@ def register():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         language = request.form['language']
+        path = request.form['path']
         experience = request.form['experience']
 
         existing_user = User.query.filter(User.email == email).first()
@@ -97,6 +99,7 @@ def register():
                 email=email,
                 password=password,
                 language=language,
+                path=path,
                 experience=experience
             )
 
