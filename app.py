@@ -37,30 +37,28 @@ class User(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    '''if request.method == "POST":
-        task_content = request.form['content']
-        new_task = ToDo(content=task_content)
-
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return "Error in adding task"
-    else:
-        tasks = ToDo.query.order_by(ToDo.id).all()
-        return render_template("index.html", tasks = tasks)'''
-    
 
     # REMOVEEEE !!!!!!!!
     #session["logged_in"] = False
     # REMOVEEE  !!!!!!!!!!!!!!
+
     user = User.query.filter(User.email == session['user_email']).first()
-    print(user)
-    
-    if 'logged_in' in session and session['logged_in']:
-        return render_template('index.html', user=user)
-    return redirect(url_for('register'))
+
+    if request.method == "POST":
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']        
+        q9 = request.form['q9']
+        q10 = request.form['q10']
+    else:
+        if 'logged_in' in session and session['logged_in']:
+            return render_template('index.html', user=user)
+        return redirect(url_for('register'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -104,8 +102,6 @@ def register():
 
             if password != confirm_password:
                 return render_template("register.html")
-
-            print('User info: ', new_user)
 
             try:
                 db.session.add(new_user)
