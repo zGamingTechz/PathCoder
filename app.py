@@ -48,15 +48,19 @@ def home():
 
     if 'logged_in' in session and session['logged_in']:
         return render_template('home.html', user=user)
+    elif 'answered' in session and not session['answered']:
+        return redirect(url_for('questions'))
     return redirect(url_for('register'))
 
 
 @app.route('/questions', methods=['GET', 'POST'])
-def index():
+def questions():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
         retrieve_and_grade(request)
+        session['logged_in'] = True
+        session['answered'] = True
         return redirect(url_for('home'))
     else:
         return render_template('questions.html', user=user)
@@ -73,7 +77,7 @@ def login():
             if check.password == password:
                 session['logged_in'] = True
                 session['user_email'] = check.email
-                return redirect('/questions')
+                return redirect('/')
             else:
                 return render_template("login.html", error = 'Incorrect password')
         else:
@@ -109,7 +113,7 @@ def register():
             try:
                 db.session.add(new_user)
                 db.session.commit()
-                session['logged_in'] = True
+                session['answered'] = False
                 return redirect('/questions')
             except Exception as e:
                 return f"Error in adding user: {str(e)}"
