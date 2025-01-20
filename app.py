@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from questions_grader import retrieve_and_grade
+from main import ai_response
 import requests
 import keys
 
@@ -71,7 +71,7 @@ def questions():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
-        retrieve_and_grade(request)
+        ai_response(request)
         session['logged_in'] = True
         session['answered'] = True
         return redirect(url_for('home'))
