@@ -72,7 +72,7 @@ def questions():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
-        ai_response(request)
+        tasks = ai_response(request)
         session['logged_in'] = True
         session['answered'] = True
         return redirect(url_for('home'))
