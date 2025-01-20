@@ -73,6 +73,16 @@ def questions():
 
     if request.method == "POST":
         tasks = ai_response(request)
+
+        for task in tasks:
+            new_task = ToDo(content=task, email=session['user_email'])
+
+            try:
+                db.session.add(new_task)
+                db.session.commit()
+            except:
+                return "Error in adding task"
+
         session['logged_in'] = True
         session['answered'] = True
         return redirect(url_for('home'))
