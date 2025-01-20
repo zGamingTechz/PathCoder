@@ -1,11 +1,20 @@
 # PathCoder
 
-**PathCoder** is an innovative web app designed to help users plan and track their journey to mastering coding languages. By generating personalized learning roadmaps and integrating them with a to-do list system, PathCoder ensures that every coder has a clear path to success. Whether you're a beginner or an advanced learner, PathCoder tailors its recommendations to fit your unique goals and skill levels.
+PathCoder is a Flask-based web application designed to help users create personalized learning roadmaps for learning programming. The app tailors a learning path based on the user's preferences, experience level, and goals. It provides a user-friendly dashboard with features such as task management, personalized learning paths, user registration, and progress tracking.
 
 ## Features
 
-- **Personalized Learning Roadmap**: Generate a custom roadmap for learning any programming language and career path (e.g., Python, JavaScript, Game Dev, etc.) based on your current skill level and goals.
-- **Task Tracking**: Track your progress by adding, updating, and deleting tasks as you work through your roadmap.
-- **AI-Powered**: Uses AI to generate a tailored learning plan based on your input.
-- **User-Friendly Interface**: Simple and intuitive design for seamless interaction.
-- **Progress Monitoring**: Stay on track with an interactive to-do list for each roadmap task.
+- **User Registration & Login**: Secure registration and login system with session management.
+- **Personalized Learning Roadmap**: Based on the user’s experience level and coding preferences, an AI model API generates a customized learning path.
+- **Task Management**: Users can view, update, or delete tasks in their to-do list, helping them track progress.
+- **External API Integration**: Displays an inspirational quote on the dashboard, integrated from an external API.
+- **Path Selection**: Users can select the coding path they want to follow (e.g., web development, game development, or data science) for a tailored learning roadmap.
+- **Dynamic HTML Rendering**: Uses Jinja2 templating engine for rendering dynamic content.
+
+## Tech Stack
+
+- **Backend**: Flask
+- **Database**: SQLite
+- **ORM**: SQLAlchemy (for database management)
+- **Frontend**: HTML, CSS and Jinja2 templating engine
+- **External APIs**: For quote integration and AI
