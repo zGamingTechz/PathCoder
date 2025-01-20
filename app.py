@@ -44,9 +44,8 @@ def home():
     #session["logged_in"] = False
     # REMOVEEE  !!!!!!!!!!!!!!
 
-    user = User.query.filter(User.email == session['user_email']).first()
-
     if 'logged_in' in session and session['logged_in']:
+        user = User.query.filter(User.email == session['user_email']).first()
         return render_template('home.html', user=user)
     elif 'answered' in session and not session['answered']:
         return redirect(url_for('questions'))
