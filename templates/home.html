@@ -1,5 +1,56 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_home.css') }}">
+<title>User Dashboard</title>
+{% endblock %}
 
 {% block body %}
-<h1>Home</h1>
+<div class="container">
+    <!-- Left Section: User Information -->
+    <div class="welcome-section">
+        <h1>Welcome, {{ user.name }}</h1>
+        <p><strong>Preferred Language:</strong> {{ user.language }}</p>
+        <p><strong>Experience Level:</strong> {{ user.experience }} years</p>
+        <p><strong>Learning Path:</strong> {{ user.path }}</p>
+        <div class="quote">
+            "Stay curious, keep learning!"
+        </div>
+    </div>
+
+    <!-- Right Section: To-Do List -->
+    <div class="form-container">
+        <h2>Your Roadmap Tasks</h2>
+        {% if tasks|length < 1 %}
+        <h4 style="text-align: center; color: #cccccc;">No Tasks Yet</h4>
+        {% else %}
+        <div class="scrollable-questions">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td class="task-cell">{{ task.content }}</td>
+                        <td class="action-cell">
+                            <a href="/delete/{{ task.id }}" class="btn delete">Delete</a>
+                            <a href="/update/{{ task.id }}" class="btn update">Update</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <form action="/" method="post">
+            <input type="text" name="content" id="content" placeholder="Add a new task" required>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

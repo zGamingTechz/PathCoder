@@ -44,12 +44,25 @@ def home():
     #session["logged_in"] = False
     # REMOVEEE  !!!!!!!!!!!!!!
 
-    if 'logged_in' in session and session['logged_in']:
-        user = User.query.filter(User.email == session['user_email']).first()
-        return render_template('home.html', user=user)
-    elif 'answered' in session and not session['answered']:
-        return redirect(url_for('questions'))
-    return redirect(url_for('register'))
+    if request.method == "POST":
+        task_content = request.form['content']
+        new_task = ToDo(content=task_content)
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return "Error in adding task"
+    else:
+        tasks = ToDo.query.order_by(ToDo.id).all()
+
+        if 'logged_in' in session and session['logged_in']:
+            user = User.query.filter(User.email == session['user_email']).first()
+            return render_template('home.html', user=user, tasks = tasks)
+        elif 'answered' in session and not session['answered']:
+            return redirect(url_for('questions'))
+        return redirect(url_for('register'))
 
 
 @app.route('/questions', methods=['GET', 'POST'])

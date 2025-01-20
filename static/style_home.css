@@ -1,0 +1,152 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1f1f1f;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 40px;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Left Section */
+.welcome-section {
+    flex: 1;
+    border-right: 2px dashed #444;
+    padding: 20px;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    color: #00aaff;
+    margin-bottom: 10px;
+}
+
+.welcome-section p {
+    font-size: 1rem;
+    color: #cccccc;
+    margin-bottom: 10px;
+}
+
+.quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: #00ffaa;
+    margin-top: 20px;
+}
+
+/* Right Section */
+.form-container {
+    flex: 1.2;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00aaff;
+    font-size: 1.8rem;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #f1f1f1;
+    font-size: 1rem;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #00aaff, #00ffaa);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0088cc;
+}
+
+/* Task List */
+.scrollable-questions {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid #444;
+    word-break: break-word;
+}
+
+table th {
+    color: #00aaff;
+}
+
+table .task-cell {
+    max-width: 300px;
+}
+
+table .action-cell {
+    display: flex;
+    gap: 10px;
+}
+
+a.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    text-align: center;
+    color: #fff;
+    background-color: #00aaff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+a.btn:hover {
+    background-color: #0088cc;
+}
+
+a.btn.delete {
+    background-color: #ff5555;
+}
+
+a.btn.delete:hover {
+    background-color: #dd3333;
+}
