@@ -113,6 +113,7 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 session['answered'] = False
+                session['user_email'] = email
                 return redirect('/questions')
             except Exception as e:
                 return f"Error in adding user: {str(e)}"
