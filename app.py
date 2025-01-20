@@ -32,7 +32,7 @@ class User(db.Model):
     language = db.Column(db.String, nullable=False)
     path = db.Column(db.String, nullable = False)
     experience = db.Column(db.String, nullable = False)
-    score = db.Column(db.Integer, default = 0)
+    score = db.Column(db.Integer, default = 0) # remember to delete !!!!!!!!!!!!!!!!
 
     def __repr__(self):
         return f'<User {self.id}:\n{self.name}\n{self.email}\n{self.password}\n{self.quote}\n{self.language}\n{self.experience}\n{self.score}>'
@@ -72,7 +72,7 @@ def questions():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
-        tasks = ai_response(request)
+        tasks = ai_response(request, user.language, user.path, user.experience)
 
         for task in tasks:
             new_task = ToDo(content=task, email=session['user_email'])
