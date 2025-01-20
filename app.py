@@ -42,6 +42,7 @@ def home():
 
     # REMOVEEEE !!!!!!!!
     #session["logged_in"] = False
+    #session['answered'] = True
     # REMOVEEE  !!!!!!!!!!!!!!
 
     if request.method == "POST":
