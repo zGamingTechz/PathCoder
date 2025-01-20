@@ -9,7 +9,7 @@ def retrieve_answers(request):
     q8 = request.form['q8']        
     q9 = request.form['q9']
 
-    print(q1)
+    return q1, q2, q3, q4, q5, q6, q7, q8, q9
 
 def ai_response(request):
-    retrieve_answers(request=request)
+    q1, q2, q3, q4, q5, q6, q7, q8, q9 = retrieve_answers(request=request)

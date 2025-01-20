@@ -15,6 +15,7 @@ url = "https://zenquotes.io/api/random"
 # ToDo database
 class ToDo(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    email = db.Column(db.String, nullable = False)
     content = db.Column(db.String, nullable = False)
 
     def __repr__(self):
@@ -47,7 +48,7 @@ def home():
 
     if request.method == "POST":
         task_content = request.form['content']
-        new_task = ToDo(content=task_content)
+        new_task = ToDo(content=task_content, email=session['user_email'])
 
         try:
             db.session.add(new_task)
@@ -56,7 +57,7 @@ def home():
         except:
             return "Error in adding task"
     else:
-        tasks = ToDo.query.order_by(ToDo.id).all()
+        tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
 
         if 'logged_in' in session and session['logged_in']:
             user = User.query.filter(User.email == session['user_email']).first()
