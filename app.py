@@ -57,10 +57,9 @@ def home():
         except:
             return "Error in adding task"
     else:
-        tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
-
         if 'logged_in' in session and session['logged_in']:
             user = User.query.filter(User.email == session['user_email']).first()
+            tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
             return render_template('home.html', user=user, tasks = tasks)
         elif 'answered' in session and not session['answered']:
             return redirect(url_for('questions'))
