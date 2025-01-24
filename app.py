@@ -182,5 +182,10 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/chatroom')
+def chatroom():
+    return render_template('chatroom.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
