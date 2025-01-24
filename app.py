@@ -40,12 +40,6 @@ class User(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-
-    # REMOVEEEE !!!!!!!!
-    #session["logged_in"] = False
-    #session['answered'] = True
-    # REMOVEEE  !!!!!!!!!!!!!!
-
     if request.method == "POST":
         task_content = request.form['content']
         new_task = ToDo(content=task_content, email=session['user_email'])

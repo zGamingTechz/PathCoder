@@ -171,3 +171,52 @@ a.btn.delete:hover {
     background-color: #cc2222;
     transform: scale(1.05);
 }
+
+/* Header Section */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c2c2c;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #444;
+    z-index: 10;
+}
+
+.header .logo h1 {
+    font-size: 2rem;
+    color: #00aaff;
+    font-weight: bold;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #00aaff, #00ffaa);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #0088cc;
+    transform: scale(1.05);
+}
+
+/* Adjust page layout for fixed header */
+body {
+    padding-top: 80px; /* Add padding equal to the header height */
+}
