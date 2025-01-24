@@ -22,6 +22,18 @@ class ToDo(db.Model):
         return '<Task %r>' % self.id
     
 
+# Chats database
+class Chats(db.Model):
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    name = db.Column(db.String, nullable = False)
+    email = db.Column(db.String, nullable = False)
+    message = db.Column(db.String, nullable = False)
+    course = db.Column(db.String, nullable = False)
+
+    def __repr__(self):
+        return '<Message %r>' % self.message
+
+
 # User database
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
