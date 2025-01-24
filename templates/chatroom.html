@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_chatroom.css') }}">
+<title>Chat Room</title>
+{% endblock %}
+
+{% block body %}
+<a href="/" class="back-button">Back</a>
+
+<div class="chatroom-container">
+    <div class="chat-header">
+        <h1>Chat Room</h1>
+    </div>
+
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="message {% if message.name == user.name %}user-message{% else %}other-message{% endif %}">
+            <div class="message-header">
+                <strong>{{ message.name }}</strong> ({{ message.path }})
+            </div>
+            <div class="message-content">
+                {{ message.content }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="/send_message" class="message-form" id="message-form">
+        <textarea name="message" placeholder="Type your message..." id="message-input" required></textarea>
+        <button type="submit" id="send-button">Send</button>
+    </form>
+</div>
+
+<script>
+    // Capture Enter key press event to submit the form
+    document.getElementById("message-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.getElementById("message-form").submit();  // Submit the form when Enter is pressed
+        }
+    });
+
+    // Prevent form from submitting when Shift + Enter is pressed
+    document.getElementById("message-input").addEventListener("keydown", function(event) {
+        if (event.key === "Enter" && event.shiftKey) {
+            return;
+        }
+    });
+</script>
+
+{% endblock %}
