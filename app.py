@@ -194,9 +194,26 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/chatroom')
+@app.route('/chatroom', methods=['GET', 'POST'])
 def chatroom():
-    return render_template('chatroom.html')
+    if request.method == "POST":
+        user = User.query.filter(User.email == session['user_email']).first()
+        new_message = Chats(
+            email=session['user_email'],
+            name=user.name,
+            course=user.path,
+            message=request.form['message']
+        )
+
+        try:
+            db.session.add(new_message)
+            db.session.commit()
+            return redirect('/chatroom')
+        except:
+            "Failed to update"
+    else:
+        messages = Chats.query.order_by(Chats.id).all()
+        return render_template('chatroom.html', messages=messages)
 
 
 if __name__ == "__main__":

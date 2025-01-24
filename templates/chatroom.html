@@ -15,25 +15,24 @@
 
     <div class="messages-container">
         {% for message in messages %}
-        <div class="message {% if message.name == user.name %}user-message{% else %}other-message{% endif %}">
+        <div class="message {% if message.email == session['user_email'] %}user-message{% else %}other-message{% endif %}">
             <div class="message-header">
-                <strong>{{ message.name }}</strong> ({{ message.path }})
+                <strong>{{ message.name }}</strong> ({{ message.course }})
             </div>
             <div class="message-content">
-                {{ message.content }}
+                {{ message.message }}
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <form method="POST" action="/send_message" class="message-form" id="message-form">
+    <form method="POST" action="/chatroom" class="message-form" id="message-form">
         <textarea name="message" placeholder="Type your message..." id="message-input" required></textarea>
         <button type="submit" id="send-button">Send</button>
     </form>
 </div>
 
 <script>
-    // Capture Enter key press event to submit the form
     document.getElementById("message-input").addEventListener("keypress", function(event) {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
@@ -41,12 +40,21 @@
         }
     });
 
-    // Prevent form from submitting when Shift + Enter is pressed
     document.getElementById("message-input").addEventListener("keydown", function(event) {
         if (event.key === "Enter" && event.shiftKey) {
             return;
         }
     });
+
+    window.onload = scrollToBottom;
+    const messageContainer = document.querySelector('.messages-container');
+
+    const observer = new MutationObserver(scrollToBottom);
+    observer.observe(messageContainer, { childList: true });
+
+    function scrollToBottom() {
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
 </script>
 
 {% endblock %}
