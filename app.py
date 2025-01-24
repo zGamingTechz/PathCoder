@@ -173,6 +173,15 @@ def update(id):
             "Failed to update"
     else:
         return render_template('update.html', task=task_to_update)
+    
+
+@app.route('/logout')
+def logout():
+    session["logged_in"] = False
+    session['answered'] = True
+
+    return redirect('/login')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
