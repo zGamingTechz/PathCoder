@@ -13,7 +13,9 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    justify-content: center; /* Vertically centers the content */
     padding-top: 20px;
+    overflow-x: hidden;
 }
 
 /* Back Button */
@@ -46,8 +48,12 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
     padding: 25px;
-    margin-top: 80px;
+    margin-top: 0;
     margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Keeps content aligned at the top */
+    height: auto; /* Adjust height based on content */
 }
 
 /* About Section */
@@ -66,7 +72,7 @@ body {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .features h2 {
@@ -84,36 +90,40 @@ body {
 .features li {
     font-size: 1.2rem;
     color: #e1e1e1;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     line-height: 1.8;
 }
 
 /* Developer Info */
 .developer-info {
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.developer-info h2 {
+    font-size: 2rem;
+    color: #00aaff;
     margin-bottom: 20px;
 }
 
 .developer-details {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     align-items: center;
-    margin-top: 20px;
 }
 
 .developer-details img {
     width: 150px;
     height: 150px;
-    border-radius: 40%;
+    border-radius: 50%;
     object-fit: cover;
-    object-position: center;
     border: 3px solid #00aaff;
 }
 
 .bio h3 {
     font-size: 1.8rem;
     color: #00aaff;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .bio p {
