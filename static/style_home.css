@@ -150,3 +150,24 @@ a.btn.delete {
 a.btn.delete:hover {
     background-color: #dd3333;
 }
+
+/* Logout Button */
+.logout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff5555, #dd3333);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #cc2222;
+    transform: scale(1.05);
+}
