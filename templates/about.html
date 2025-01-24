@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_about.css') }}">
+<title>About PathCoder</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <!-- Back Button -->
+    <a href="/" class="btn back-button">← Back</a>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <!-- Header Section -->
+        <h1 class="section-title">About PathCoder</h1>
+        <p class="intro-text">
+            Welcome to <strong>PathCoder</strong>, your ultimate personalized coding roadmap generator. 
+            PathCoder simplifies your learning journey with AI-driven insights, custom roadmaps, and productivity tools.
+        </p>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature">
+                <h2>What is PathCoder?</h2>
+                <p>
+                    PathCoder generates tailored learning paths based on your coding preferences, experience level, and career goals.
+                </p>
+            </div>
+            <div class="feature">
+                <h2>Key Features</h2>
+                <ul>
+                    <li><strong>AI-Powered Roadmaps:</strong> Step-by-step guides tailored to your goals.</li>
+                    <li><strong>To-Do List:</strong> Manage tasks efficiently with progress tracking.</li>
+                    <li><strong>Motivational Quotes:</strong> Stay inspired with daily encouragement.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- About Developer Section -->
+        <div class="developer-section">
+            <h2 class="section-title">Meet the Developer</h2>
+            <div class="developer-info">
+                <img src="{{ url_for('static', filename='developer.png') }}" alt="Developer Image" class="developer-photo">
+                <div class="developer-bio">
+                    <p>
+                        <strong>Bhavya Soni</strong> is an AI practitioner and game developer with expertise in Python, machine learning, 
+                        and Unity game development. A second-year BCA student at Amity University Rajasthan, Bhavya is passionate about 
+                        creating impactful projects that merge innovation and technology.
+                    </p>
+                    <p>
+                        With a programming journey that started in 7th grade, Bhavya has developed diverse projects ranging from 
+                        choice-based games to AI-powered applications. Certified in Python and TensorFlow, Bhavya is dedicated to 
+                        empowering others through technology and mentorship.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
