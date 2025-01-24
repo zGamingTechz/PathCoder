@@ -2,57 +2,36 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style_about.css') }}">
-<title>About PathCoder</title>
+<title>About Us</title>
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <!-- Back Button -->
-    <a href="/" class="btn back-button">← Back</a>
+<a href="/" class="back-button">Back</a>
 
-    <!-- About Section -->
+<div class="about-container">
     <div class="about-section">
-        <!-- Header Section -->
-        <h1 class="section-title">About PathCoder</h1>
-        <p class="intro-text">
-            Welcome to <strong>PathCoder</strong>, your ultimate personalized coding roadmap generator. 
-            PathCoder simplifies your learning journey with AI-driven insights, custom roadmaps, and productivity tools.
-        </p>
-
-        <!-- Features Grid -->
-        <div class="features-grid">
-            <div class="feature">
-                <h2>What is PathCoder?</h2>
-                <p>
-                    PathCoder generates tailored learning paths based on your coding preferences, experience level, and career goals.
-                </p>
-            </div>
-            <div class="feature">
-                <h2>Key Features</h2>
-                <ul>
-                    <li><strong>AI-Powered Roadmaps:</strong> Step-by-step guides tailored to your goals.</li>
-                    <li><strong>To-Do List:</strong> Manage tasks efficiently with progress tracking.</li>
-                    <li><strong>Motivational Quotes:</strong> Stay inspired with daily encouragement.</li>
-                </ul>
-            </div>
+        <div class="intro">
+            <h1>About PathCoder</h1>
+            <p>PathCoder is a personalized coding learning roadmap platform designed to help developers chart their unique coding journey. Whether you're just starting out or looking to sharpen your skills, PathCoder offers a tailored approach to help you succeed.</p>
         </div>
 
-        <!-- About Developer Section -->
-        <div class="developer-section">
-            <h2 class="section-title">Meet the Developer</h2>
-            <div class="developer-info">
-                <img src="{{ url_for('static', filename='developer.png') }}" alt="Developer Image" class="developer-photo">
-                <div class="developer-bio">
-                    <p>
-                        <strong>Bhavya Soni</strong> is an AI practitioner and game developer with expertise in Python, machine learning, 
-                        and Unity game development. A second-year BCA student at Amity University Rajasthan, Bhavya is passionate about 
-                        creating impactful projects that merge innovation and technology.
-                    </p>
-                    <p>
-                        With a programming journey that started in 7th grade, Bhavya has developed diverse projects ranging from 
-                        choice-based games to AI-powered applications. Certified in Python and TensorFlow, Bhavya is dedicated to 
-                        empowering others through technology and mentorship.
-                    </p>
+        <div class="features">
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Personalized Roadmap:</strong> Custom learning paths based on your experience level and coding preferences.</li>
+                <li><strong>Task Management:</strong> Track and manage coding tasks in an intuitive to-do list system.</li>
+                <li><strong>Question-Based Customization:</strong> Asks questions and generates a personalized and unique roadmap accordingly.</li>
+                <li><strong>Motivational Quote:</strong> You get your own unique motivational quote.</li>
+            </ul>
+        </div>
+
+        <div class="developer-info">
+            <h2>About the Developer</h2>
+            <div class="developer-details">
+                <img src="{{ url_for('static', filename='me.png') }}" alt="Bhavya Soni">
+                <div class="bio">
+                    <h3>Bhavya Soni</h3>
+                    <p><strong>AI Practitioner and Game Developer</strong> with experience in Python, Unity, and Game Development. Currently pursuing BCA at Amity University Rajasthan, I've worked on various projects including AI based apps and Games.</p>
                 </div>
             </div>
         </div>
