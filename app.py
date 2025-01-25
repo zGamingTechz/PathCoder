@@ -208,6 +208,7 @@ def chatroom():
 
         try:
             db.session.add(new_message)
+            user.score += 10
             db.session.commit()
             return redirect('/chatroom')
         except:
