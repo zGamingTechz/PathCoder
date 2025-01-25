@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_leaderboard.css') }}">
+<title>Leaderboard</title>
+{% endblock %}
+
 {% block body %}
-<h1>Leaderboard</h1>
+<a href="/" class="back-button">Back</a>
+
+<div class="leaderboard-container">
+    <div class="leaderboard-header">
+        <h1>Leaderboard</h1>
+    </div>
+
+    <table class="leaderboard-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Points</th>
+                <th>Path</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="leaderboard-entry">
+                <td>{{ loop.index }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.points }}</td>
+                <td>{{ user.path }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
