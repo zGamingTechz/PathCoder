@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import desc
 from main import ai_response
+from quote import get_random_tip_or_quote
 import requests
 import keys
 
@@ -97,7 +98,7 @@ def questions():
 
 @app.route('/loading', methods=['GET', 'POST'])
 def loading():
-    quote = "hello world"
+    quote = get_random_tip_or_quote()
     return render_template('loading.html', quote=quote)
 
 
