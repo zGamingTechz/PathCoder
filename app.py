@@ -214,6 +214,11 @@ def chatroom():
     else:
         messages = Chats.query.order_by(Chats.id).all()
         return render_template('chatroom.html', messages=messages)
+    
+
+@app.route('/leaderboard')
+def leaderboard():
+    return render_template('leaderboard.html')
 
 
 if __name__ == "__main__":
