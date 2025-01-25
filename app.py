@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy import desc
 from main import ai_response
 import requests
 import keys
@@ -44,7 +45,7 @@ class User(db.Model):
     language = db.Column(db.String, nullable=False)
     path = db.Column(db.String, nullable = False)
     experience = db.Column(db.String, nullable = False)
-    score = db.Column(db.Integer, default = 0) # remember to delete !!!!!!!!!!!!!!!!
+    score = db.Column(db.Integer, default = 0)
 
     def __repr__(self):
         return f'<User {self.id}:\n{self.name}\n{self.email}\n{self.password}\n{self.quote}\n{self.language}\n{self.experience}\n{self.score}>'
@@ -218,7 +219,9 @@ def chatroom():
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    users = User.query.order_by(desc(User.score)).all()
+
+    return render_template('leaderboard.html', users=users)
 
 
 if __name__ == "__main__":
