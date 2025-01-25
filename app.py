@@ -157,9 +157,11 @@ def register():
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = ToDo.query.get_or_404(id)
+    user = User.query.filter(User.email == session['user_email']).first()
 
     try:
         db.session.delete(task_to_delete)
+        user.score += 100
         db.session.commit()
         return redirect('/')
     except:
