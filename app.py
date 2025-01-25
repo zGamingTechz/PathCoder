@@ -78,22 +78,46 @@ def questions():
     user = User.query.filter(User.email == session['user_email']).first()
 
     if request.method == "POST":
-        tasks = ai_response(request, user.language, user.path, user.experience)
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+        q9 = request.form['q9']
 
-        for task in tasks:
-            new_task = ToDo(content=task, email=session['user_email'])
-
-            try:
-                db.session.add(new_task)
-                db.session.commit()
-            except:
-                return "Error in adding task"
-
-        session['logged_in'] = True
-        session['answered'] = True
-        return redirect(url_for('home'))
+        global Qs
+        Qs = [q1, q2, q3, q4, q5, q6, q7, q8, q9]
+        return redirect('/loading')
     else:
         return render_template('questions.html', user=user)
+    
+
+@app.route('/loading', methods=['GET', 'POST'])
+def loading():
+    quote = "hello world"
+    return render_template('loading.html', quote=quote)
+
+
+@app.route('/fetch_tasks', methods=['GET', 'POST'])
+def fetch_tasks():
+    user = User.query.filter(User.email == session['user_email']).first()
+    tasks = ai_response(Qs, user.language, user.path, user.experience)
+
+    for task in tasks:
+        new_task = ToDo(content=task, email=session['user_email'])
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+        except:
+            return "Error in adding task"
+
+    session['logged_in'] = True
+    session['answered'] = True
+    return redirect(url_for('home'))
 
 
 @app.route('/login', methods=['GET', 'POST'])

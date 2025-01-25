@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Loading...</title>
+    <style>
+        body {
+            background-color: #0e0e0e;
+            color: #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+        .loading-container {
+            text-align: center;
+        }
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            border-top: 8px solid #00ff00;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .quote {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #00ff00;
+        }
+    </style>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('fetch_tasks') }}";
+        }, 10);
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <div class="quote">{{ quote }}</div>
+    </div>
+{% endblock %}

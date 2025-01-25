@@ -1,21 +1,21 @@
 from openai import OpenAI
 from keys import ai_key
 
-def retrieve_answers(request):
-    q1 = request.form['q1']
-    q2 = request.form['q2']
-    q3 = request.form['q3']
-    q4 = request.form['q4']
-    q5 = request.form['q5']
-    q6 = request.form['q6']
-    q7 = request.form['q7']
-    q8 = request.form['q8']        
-    q9 = request.form['q9']
+def retrieve_answers(questions):
+    q1 = questions[0]
+    q2 = questions[1]
+    q3 = questions[2]
+    q4 = questions[3]
+    q5 = questions[4]
+    q6 = questions[5]
+    q7 = questions[6]
+    q8 = questions[7]        
+    q9 = questions[8]
 
     return q1, q2, q3, q4, q5, q6, q7, q8, q9
 
-def ai_response(request, language, path, experience):
-    q1, q2, q3, q4, q5, q6, q7, q8, q9 = retrieve_answers(request=request)
+def ai_response(questions, language, path, experience):
+    q1, q2, q3, q4, q5, q6, q7, q8, q9 = retrieve_answers(questions=questions)
 
     client = OpenAI(
         base_url="https://api.studio.nebius.ai/v1/",
