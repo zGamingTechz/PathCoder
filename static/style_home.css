@@ -13,6 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding-top: 80px;
 }
 
 /* Container Layout */
@@ -51,6 +52,49 @@ body {
     font-style: italic;
     color: #00ffaa;
     margin-top: 20px;
+}
+
+/* Predefined Resources Section */
+.resources-section {
+    margin-top: 30px;
+}
+
+.resources-section h3 {
+    font-size: 1.2rem;
+    color: #00aaff;
+    margin-bottom: 15px;
+}
+
+.icons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.icons a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.icons a:hover {
+    transform: scale(1.2);
+}
+
+.icons a.youtube {
+    color: #ff0000;
+}
+
+.icons a.youtube:hover {
+    transform: scale(1.2);
+}
+
+.icons a.web {
+    color: #1500ff;
+}
+
+.icons a.web:hover {
+    transform: scale(1.2);
 }
 
 /* Right Section */
@@ -214,9 +258,4 @@ a.btn.delete:hover {
 .nav-btn:hover {
     background-color: #0088cc;
     transform: scale(1.05);
-}
-
-/* Adjust page layout for fixed header */
-body {
-    padding-top: 80px; /* Add padding equal to the header height */
 }

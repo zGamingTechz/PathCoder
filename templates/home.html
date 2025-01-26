@@ -2,6 +2,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style_home.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <title>User Dashboard</title>
 {% endblock %}
 
@@ -28,6 +29,21 @@
         <div class="quote">
             {{ user.quote }}
         </div>
+
+        <div class="resources-section">
+            <h3>Predefined resources:</h3>
+            <div class="icons">
+                <a href="https://www.youtube.com/" target="_blank" class="youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.youtube.com/" target="_blank" class="youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.example.com/" target="_blank" class="web">
+                    <i class="fas fa-link"></i>
+                </a>
+            </div>            
+        </div>        
     </div>
 
     <!-- Right Section: To-Do List -->
