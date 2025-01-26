@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy import desc
 from main import ai_response
 from quote import get_random_tip_or_quote
+from resources import return_resources
 import requests
 import keys
 
@@ -68,7 +69,8 @@ def home():
         if 'logged_in' in session and session['logged_in']:
             user = User.query.filter(User.email == session['user_email']).first()
             tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
-            return render_template('home.html', user=user, tasks = tasks)
+            resources = return_resources(user.path)
+            return render_template('home.html', user=user, tasks = tasks, resources=resources)
         elif 'answered' in session and not session['answered']:
             return redirect(url_for('questions'))
         return redirect(url_for('register'))
