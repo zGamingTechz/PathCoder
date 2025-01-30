@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_chatbot.css') }}">
+<title>AI Mentor Chat</title>
+{% endblock %}
+
+{% block body %}
+<a href="/" class="back-button">Back</a>
+
+<div class="chatroom-container">
+    <div class="chat-header">
+        <h1>AI Mentor Chat</h1>
+        <p class="warning">⚠️ Please ask only coding-related questions. Irrelevant queries won't be answered.</p>
+    </div>
+
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="message {% if message.email == session['user_email'] %}user-message{% else %}other-message{% endif %}">
+            <div class="message-header">
+                <strong>{{ message.name }}</strong>
+            </div>
+            <div class="message-content">
+                {{ message.message }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="ai-typing" id="ai-typing" style="display: none;">AI Mentor is typing...</div>
+
+    <form method="POST" action="/chatbot" class="message-form" id="message-form">
+        <textarea name="message" placeholder="Type your coding question here..." id="message-input" required></textarea>
+        <button type="submit" id="send-button">Send</button>
+    </form>
+
+    <div class="resources">
+        <p>For better learning, try searching on:</p>
+        <a href="https://stackoverflow.com/" target="_blank">Stack Overflow</a>
+        <a href="https://www.geeksforgeeks.org/" target="_blank">Geeks for Geeks</a>
+        <a href="https://www.w3schools.com/" target="_blank">W3Schools</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById("message-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.getElementById("message-form").submit();
+        }
+    });
+
+    document.getElementById("message-form").addEventListener("submit", function() {
+        document.getElementById("ai-typing").style.display = "block";
+    });
+
+    window.onload = scrollToBottom;
+    const messageContainer = document.querySelector('.messages-container');
+
+    const observer = new MutationObserver(scrollToBottom);
+    observer.observe(messageContainer, { childList: true });
+
+    function scrollToBottom() {
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+</script>
+
+{% endblock %}
