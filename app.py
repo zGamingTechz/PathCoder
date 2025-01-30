@@ -247,6 +247,10 @@ def chatroom():
         return render_template('chatroom.html', messages=messages)
     
 
+@app.route('/chatbot', methods=['GET', 'POST'])
+def chatbot():
+    return render_template("chatbot.html")
+
 @app.route('/leaderboard')
 def leaderboard():
     users = User.query.order_by(desc(User.score)).all()
