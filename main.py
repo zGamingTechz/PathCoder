@@ -35,3 +35,23 @@ def ai_response(questions, language, path, experience):
     tasks = result.split("$&")
 
     return tasks
+
+
+def chatbot_response(name, language, path, experience, message):
+    client = OpenAI(
+        base_url="http://localhost:1234/v1",
+        api_key="lm-studio"
+    )
+
+    completion = client.chat.completions.create(
+        model="TheBloke/deepseek-coder-6.7B-instruct-GGUF",
+        messages=[
+            {"role": "system", "content": f"The user's name is {name}, he/she prefers to use {language}, they are a/an {experience} in the field of {path}. Always address the user by their name and only answwer questions related to Computer Science. If the user asks any question other than computer science tell them that you can only answer questions related to computer science. Also encourage the user to spend some time to solve the questions themselves and refer to Stackoverflow , geeks for geeks etc."},
+            {"role": "user", "content": message}
+        ],
+        temperature=0.7,
+    )
+
+    result = str(completion.choices[0].message.content)
+
+    return result
