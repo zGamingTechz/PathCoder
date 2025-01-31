@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import desc
-from main import ai_response
+from main import ai_response, chatbot_response
 from quote import get_random_tip_or_quote
 from resources import return_resources
 import requests
@@ -41,7 +41,7 @@ class Chats(db.Model):
 class Chatbot_Messages(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     name = db.Column(db.String, nullable = False)
-    email = db.Column(db.String, nullable = False)
+    email = db.Column(db.String)
     message = db.Column(db.String, nullable = False)
 
     def __repr__(self):
@@ -260,7 +260,45 @@ def chatroom():
 
 @app.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
-    return render_template("chatbot.html")
+    user = User.query.filter(User.email == session['user_email']).first()
+    if request.method == "POST":
+        message = request.form['message']
+        user_message = Chatbot_Messages(
+            name=user.name,
+            email=user.email,
+            message=message
+        )
+
+        try:
+            db.session.add(user_message)
+            user.score += 10
+            db.session.commit()
+            return redirect('/chatbot')
+        except:
+            "Failed to update"
+
+        response = chatbot_response(
+            name=user.name,
+            language=user.language,
+            experience=user.experience,
+            path=user.path,
+            message=message
+        )
+        chatbot_message = Chatbot_Messages(
+            name="Code Mentor",
+            email=user.email,
+            message=response
+        )
+
+        try:
+            db.session.add(chatbot_message)
+            db.session.commit()
+            return redirect('/chatbot')
+        except:
+            "Failed to update"
+    else:
+        messages = Chatbot_Messages.query.filter(Chatbot_Messages.email == session['user_email']).order_by(Chatbot_Messages.id).all()
+        return render_template("chatbot.html", messages=messages, name=user.name)
 
 @app.route('/leaderboard')
 def leaderboard():

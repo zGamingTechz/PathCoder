@@ -17,7 +17,7 @@
 
     <div class="messages-container">
         {% for message in messages %}
-        <div class="message {% if message.email == session['user_email'] %}user-message{% else %}other-message{% endif %}">
+        <div class="message {% if message.name == name %}user-message{% else %}other-message{% endif %}">
             <div class="message-header">
                 <strong>{{ message.name }}</strong>
             </div>
