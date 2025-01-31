@@ -9,7 +9,7 @@
 {% block body %}
 <a href="/" class="back-button">Back</a>
 
-<div class="chatroom-container">
+<div class="chat-container">
     <div class="chat-header">
         <h1>AI Mentor Chat</h1>
         <p class="warning">⚠️ Please ask only coding-related questions. Irrelevant queries won't be answered.</p>
@@ -17,7 +17,7 @@
 
     <div class="messages-container">
         {% for message in messages %}
-        <div class="message {% if message.name == name %}user-message{% else %}other-message{% endif %}">
+        <div class="message {% if message.name == name %}user-message{% else %}ai-message{% endif %}">
             <div class="message-header">
                 <strong>{{ message.name }}</strong>
             </div>
@@ -44,26 +44,150 @@
 </div>
 
 <script>
-    document.getElementById("message-input").addEventListener("keypress", function(event) {
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            document.getElementById("message-form").submit();
+    let eventSource = null; // Variable to store the SSE connection
+
+    // Function to check if the last message is from the user
+    function isLastMessageFromUser() {
+        const messages = document.querySelectorAll('.messages-container .message');
+        if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+            return lastMessage.classList.contains("user-message");
+        }
+        return false;
+    }
+
+    // Function to show or hide the "AI is typing" indicator
+    function updateTypingIndicator() {
+        const aiTyping = document.getElementById("ai-typing");
+        if (isLastMessageFromUser()) {
+            aiTyping.style.display = "block"; // Show the indicator
+        } else {
+            aiTyping.style.display = "none"; // Hide the indicator
+        }
+    }
+
+    // Function to start the SSE connection
+    function startSSE() {
+        if (eventSource) {
+            eventSource.close(); // Close any existing connection
+        }
+
+        eventSource = new EventSource("/chatbot/stream");
+
+        eventSource.onmessage = function(event) {
+            if (event.data === "END") {
+                // Close the SSE connection after receiving the response
+                eventSource.close();
+                eventSource = null;
+                return;
+            }
+
+            const response = event.data; // AI's response
+            const messageContainer = document.querySelector('.messages-container');
+
+            // Create a new message element for the AI's response
+            const messageDiv = document.createElement("div");
+            messageDiv.className = "message ai-message";
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <strong>Code Mentor</strong>
+                </div>
+                <div class="message-content markdown-content">
+                    ${response}
+                </div>
+            `;
+
+            // Append the AI's response to the messages container
+            messageContainer.appendChild(messageDiv);
+
+            // Update the typing indicator
+            updateTypingIndicator();
+
+            // Scroll to bottom and render Markdown
+            scrollToBottom();
+            convertMarkdown();
+        };
+
+        eventSource.onerror = function() {
+            console.error("SSE connection error. Reconnecting...");
+            eventSource.close();
+            eventSource = null;
+        };
+    }
+
+    // Clear the input box after form submission
+    document.getElementById("message-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const messageInput = document.getElementById("message-input");
+        const message = messageInput.value.trim();
+
+        if (message) {
+            // Clear the input box
+            messageInput.value = "";
+
+            // Append the user's message to the chat interface
+            const messageContainer = document.querySelector('.messages-container');
+            const messageDiv = document.createElement("div");
+            messageDiv.className = "message user-message";
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <strong>{{ name }}</strong>
+                </div>
+                <div class="message-content markdown-content">
+                    ${message}
+                </div>
+            `;
+            messageContainer.appendChild(messageDiv);
+
+            // Show "AI is typing" indicator
+            updateTypingIndicator();
+
+            // Scroll to bottom and render Markdown
+            scrollToBottom();
+            convertMarkdown();
+
+            // Submit the form asynchronously
+            fetch("/chatbot", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `message=${encodeURIComponent(message)}`,
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Start the SSE connection after the form is submitted
+                    startSSE();
+                }
+            })
+            .catch(error => {
+                console.error("Error submitting message:", error);
+                document.getElementById("ai-typing").style.display = "none"; // Hide the indicator on error
+            });
         }
     });
 
-    document.getElementById("message-form").addEventListener("submit", function() {
-        document.getElementById("ai-typing").style.display = "block";
+    // Handle Enter key for submission
+    document.getElementById("message-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.getElementById("message-form").dispatchEvent(new Event("submit"));
+        }
     });
 
+    // Scroll to bottom and render Markdown
     window.onload = function() {
         scrollToBottom();
         convertMarkdown();
+        updateTypingIndicator(); // Initialize the typing indicator
     };
 
     const messageContainer = document.querySelector('.messages-container');
     const observer = new MutationObserver(() => {
         scrollToBottom();
         convertMarkdown();
+        updateTypingIndicator(); // Update the typing indicator when messages change
     });
     observer.observe(messageContainer, { childList: true });
 
@@ -73,7 +197,8 @@
 
     function convertMarkdown() {
         document.querySelectorAll('.markdown-content').forEach(el => {
-            el.innerHTML = marked.parse(el.textContent);
+            const trimmedContent = el.textContent.trim();
+            el.innerHTML = marked.parse(trimmedContent);
         });
     }
 </script>

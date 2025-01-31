@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify, Response, stream_with_context
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import desc
+from threading import Thread
 from main import ai_response, chatbot_response
 from quote import get_random_tip_or_quote
 from resources import return_resources
@@ -17,32 +18,32 @@ url = "https://zenquotes.io/api/random"
 
 # ToDo database
 class ToDo(db.Model):
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    email = db.Column(db.String, nullable = False)
-    content = db.Column(db.String, nullable = False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<Task %r>' % self.id
-    
+
 
 # Chats database
 class Chats(db.Model):
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    name = db.Column(db.String, nullable = False)
-    email = db.Column(db.String, nullable = False)
-    message = db.Column(db.String, nullable = False)
-    course = db.Column(db.String, nullable = False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    message = db.Column(db.String, nullable=False)
+    course = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<Message %r>' % self.message
-    
+
 
 # Chatbot Messages database
 class Chatbot_Messages(db.Model):
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    name = db.Column(db.String, nullable = False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
     email = db.Column(db.String)
-    message = db.Column(db.String, nullable = False)
+    message = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<Message %r>' % self.message
@@ -50,19 +51,19 @@ class Chatbot_Messages(db.Model):
 
 # User database
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    name = db.Column(db.String, nullable = False)
-    email = db.Column(db.String, nullable = False)
-    password = db.Column(db.String, nullable = False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
     quote = db.Column(db.String, default=requests.get(url).json()[0]['q'])
     language = db.Column(db.String, nullable=False)
-    path = db.Column(db.String, nullable = False)
-    experience = db.Column(db.String, nullable = False)
-    score = db.Column(db.Integer, default = 0)
+    path = db.Column(db.String, nullable=False)
+    experience = db.Column(db.String, nullable=False)
+    score = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return f'<User {self.id}:\n{self.name}\n{self.email}\n{self.password}\n{self.quote}\n{self.language}\n{self.experience}\n{self.score}>'
-    
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -81,7 +82,7 @@ def home():
             user = User.query.filter(User.email == session['user_email']).first()
             tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
             resources = return_resources(user.path)
-            return render_template('home.html', user=user, tasks = tasks, resources=resources)
+            return render_template('home.html', user=user, tasks=tasks, resources=resources)
         elif 'answered' in session and not session['answered']:
             return redirect(url_for('questions'))
         return redirect(url_for('register'))
@@ -107,7 +108,7 @@ def questions():
         return redirect('/loading')
     else:
         return render_template('questions.html', user=user)
-    
+
 
 @app.route('/loading', methods=['GET', 'POST'])
 def loading():
@@ -147,11 +148,11 @@ def login():
                 session['user_email'] = check.email
                 return redirect('/')
             else:
-                return render_template("login.html", error = 'Incorrect password')
+                return render_template("login.html", error='Incorrect password')
         else:
-            return render_template("login.html", error = 'User not found')
-    return render_template("login.html", error = '')
-    
+            return render_template("login.html", error='User not found')
+    return render_template("login.html", error='')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -187,7 +188,7 @@ def register():
             except Exception as e:
                 return f"Error in adding user: {str(e)}"
         else:
-            return render_template("register.html", error = 'Email already in use')
+            return render_template("register.html", error='Email already in use')
     else:
         return render_template("register.html")
 
@@ -204,7 +205,7 @@ def delete(id):
         return redirect('/')
     except:
         return "Failed to delete"
-    
+
 
 @app.route('/update/<int:id>', methods=["GET", 'POST'])
 def update(id):
@@ -212,7 +213,7 @@ def update(id):
 
     if request.method == "POST":
         task_to_update.content = request.form['content']
-        
+
         try:
             db.session.commit()
             return redirect('/')
@@ -220,7 +221,7 @@ def update(id):
             "Failed to update"
     else:
         return render_template('update.html', task=task_to_update)
-    
+
 
 @app.route('/logout')
 def logout():
@@ -256,13 +257,15 @@ def chatroom():
     else:
         messages = Chats.query.order_by(Chats.id).all()
         return render_template('chatroom.html', messages=messages)
-    
+
 
 @app.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
     user = User.query.filter(User.email == session['user_email']).first()
+
     if request.method == "POST":
         message = request.form['message']
+
         user_message = Chatbot_Messages(
             name=user.name,
             email=user.email,
@@ -273,32 +276,57 @@ def chatbot():
             db.session.add(user_message)
             user.score += 10
             db.session.commit()
-            return redirect('/chatbot')
-        except:
-            "Failed to update"
+        except Exception as e:
+            db.session.rollback()
+            return f"Failed to update: {str(e)}"
+        return redirect('/chatbot')
 
-        response = chatbot_response(
-            name=user.name,
-            language=user.language,
-            experience=user.experience,
-            path=user.path,
-            message=message
-        )
-        chatbot_message = Chatbot_Messages(
-            name="Code Mentor",
-            email=user.email,
-            message=response
-        )
-
-        try:
-            db.session.add(chatbot_message)
-            db.session.commit()
-            return redirect('/chatbot')
-        except:
-            "Failed to update"
     else:
         messages = Chatbot_Messages.query.filter(Chatbot_Messages.email == session['user_email']).order_by(Chatbot_Messages.id).all()
         return render_template("chatbot.html", messages=messages, name=user.name)
+
+
+@app.route('/chatbot/stream')
+def chatbot_stream():
+    user = User.query.filter(User.email == session['user_email']).first()
+
+    def event_stream():
+        # Fetch the latest messages
+        messages = Chatbot_Messages.query.filter(Chatbot_Messages.email == session['user_email']).order_by(Chatbot_Messages.id).all()
+
+        # If the last message is from the user, generate the AI's response
+        if messages and messages[-1].name != "Code Mentor":
+            last_user_message = messages[-1].message
+            response = chatbot_response(
+                name=user.name,
+                language=user.language,
+                experience=user.experience,
+                path=user.path,
+                message=last_user_message
+            )
+
+            # Save the AI's response to the database
+            chatbot_message = Chatbot_Messages(
+                name="Code Mentor",
+                email=user.email,
+                message=response
+            )
+
+            try:
+                db.session.add(chatbot_message)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Failed to save AI response: {str(e)}")
+
+            # Send the AI's response to the client
+            yield f"data: {response}\n\n"
+
+        # Close the connection after sending the response
+        yield "data: END\n\n"
+
+    return Response(stream_with_context(event_stream()), content_type='text/event-stream')
+
 
 @app.route('/leaderboard')
 def leaderboard():
