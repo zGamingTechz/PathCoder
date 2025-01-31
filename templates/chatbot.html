@@ -75,6 +75,9 @@
             if (event.data === "END") {
                 eventSource.close();
                 eventSource = null;
+
+                // Refresh the page after the AI's response is received
+                window.location.reload();
                 return;
             }
 
