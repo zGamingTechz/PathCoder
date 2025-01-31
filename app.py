@@ -35,6 +35,17 @@ class Chats(db.Model):
 
     def __repr__(self):
         return '<Message %r>' % self.message
+    
+
+# Chatbot Messages database
+class Chatbot_Messages(db.Model):
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    name = db.Column(db.String, nullable = False)
+    email = db.Column(db.String, nullable = False)
+    message = db.Column(db.String, nullable = False)
+
+    def __repr__(self):
+        return '<Message %r>' % self.message
 
 
 # User database
