@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style_chatbot.css') }}">
 <title>AI Mentor Chat</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -20,7 +21,7 @@
             <div class="message-header">
                 <strong>{{ message.name }}</strong>
             </div>
-            <div class="message-content">
+            <div class="message-content markdown-content">
                 {{ message.message }}
             </div>
         </div>
@@ -54,14 +55,26 @@
         document.getElementById("ai-typing").style.display = "block";
     });
 
-    window.onload = scrollToBottom;
-    const messageContainer = document.querySelector('.messages-container');
+    window.onload = function() {
+        scrollToBottom();
+        convertMarkdown();
+    };
 
-    const observer = new MutationObserver(scrollToBottom);
+    const messageContainer = document.querySelector('.messages-container');
+    const observer = new MutationObserver(() => {
+        scrollToBottom();
+        convertMarkdown();
+    });
     observer.observe(messageContainer, { childList: true });
 
     function scrollToBottom() {
         messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
+    function convertMarkdown() {
+        document.querySelectorAll('.markdown-content').forEach(el => {
+            el.innerHTML = marked.parse(el.textContent);
+        });
     }
 </script>
 
