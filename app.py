@@ -291,10 +291,8 @@ def chatbot_stream():
     user = User.query.filter(User.email == session['user_email']).first()
 
     def event_stream():
-        # Fetch the latest messages
         messages = Chatbot_Messages.query.filter(Chatbot_Messages.email == session['user_email']).order_by(Chatbot_Messages.id).all()
 
-        # If the last message is from the user, generate the AI's response
         if messages and messages[-1].name != "Code Mentor":
             last_user_message = messages[-1].message
             response = chatbot_response(
@@ -305,7 +303,6 @@ def chatbot_stream():
                 message=last_user_message
             )
 
-            # Save the AI's response to the database
             chatbot_message = Chatbot_Messages(
                 name="Code Mentor",
                 email=user.email,
@@ -319,10 +316,8 @@ def chatbot_stream():
                 db.session.rollback()
                 print(f"Failed to save AI response: {str(e)}")
 
-            # Send the AI's response to the client
             yield f"data: {response}\n\n"
 
-        # Close the connection after sending the response
         yield "data: END\n\n"
 
     return Response(stream_with_context(event_stream()), content_type='text/event-stream')
