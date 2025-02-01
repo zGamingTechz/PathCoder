@@ -2,6 +2,8 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style_ide.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
 <title>Web IDE</title>
 {% endblock %}
 
@@ -30,23 +32,43 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+
 <script>
+    // Initialize CodeMirror with a dark theme
+    var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+        lineNumbers: true,
+        mode: "{{ language|lower }}",
+        theme: "dracula",
+        matchBrackets: true,
+        autoCloseBrackets: true
+    });
+
+    // Run the code in an iframe
     document.getElementById("run-button").addEventListener("click", function() {
-        let code = document.getElementById("code-editor").value;
+        let code = editor.getValue();
         let outputFrame = document.getElementById("output-frame").contentWindow.document;
         outputFrame.open();
         outputFrame.write(code);
         outputFrame.close();
+
+        let outputDoc = outputFrame.body;
+        outputDoc.style.color = "green";
     });
 
+    // Clear the editor and output
     document.getElementById("clear-button").addEventListener("click", function() {
-        document.getElementById("code-editor").value = "";
+        editor.setValue("");
         document.getElementById("output-frame").contentWindow.document.open();
         document.getElementById("output-frame").contentWindow.document.close();
     });
 
+    // Download the code file with the appropriate extension
     document.getElementById("download-button").addEventListener("click", function() {
-        let code = document.getElementById("code-editor").value.trim();
+        let code = editor.getValue().trim();
         let extension = "{{ language|lower }}";
 
         let extMap = { "python": "py", "html": "html", "css": "css", "javascript": "js", "c++": "cpp", "c": "c", "c#": "cs"};
