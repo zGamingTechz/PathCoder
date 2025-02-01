@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_ide.css') }}">
+<title>Web IDE</title>
+{% endblock %}
+
+{% block body %}
+<a href="/" class="back-button">Back</a>
+
+<div class="ide-container">
+    <div class="ide-header">
+        <h1>Web IDE</h1>
+    </div>
+
+    <div class="ide-main">
+        <div class="editor-container">
+            <textarea id="code-editor" placeholder="Write your code here..."></textarea>
+        </div>
+        
+        <div class="output-container">
+            <iframe id="code-output"></iframe>
+        </div>
+    </div>
+
+    <div class="ide-controls">
+        <button id="run-button">Run Code</button>
+        <button id="clear-button">Clear</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById("run-button").addEventListener("click", function() {
+        const code = document.getElementById("code-editor").value;
+        const outputFrame = document.getElementById("code-output").contentWindow.document;
+        outputFrame.open();
+        outputFrame.write(code);
+        outputFrame.close();
+    });
+
+    document.getElementById("clear-button").addEventListener("click", function() {
+        document.getElementById("code-editor").value = "";
+        document.getElementById("code-output").contentWindow.document.body.innerHTML = "";
+    });
+</script>
+
+{% endblock %}
