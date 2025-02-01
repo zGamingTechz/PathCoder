@@ -35,10 +35,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
 
 <script>
-    // Initialize CodeMirror with a dark theme
     var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
         lineNumbers: true,
         mode: "{{ language|lower }}",
@@ -47,26 +45,39 @@
         autoCloseBrackets: true
     });
 
-    // Run the code in an iframe
     document.getElementById("run-button").addEventListener("click", function() {
         let code = editor.getValue();
-        let outputFrame = document.getElementById("output-frame").contentWindow.document;
-        outputFrame.open();
-        outputFrame.write(code);
-        outputFrame.close();
+        let language = "{{ language|lower }}";
 
-        let outputDoc = outputFrame.body;
-        outputDoc.style.color = "green";
+        // Send the code to the backend via AJAX
+        fetch('/run_code', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `code=${encodeURIComponent(code)}&language=${encodeURIComponent(language)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            let outputFrame = document.getElementById("output-frame").contentWindow.document;
+            outputFrame.open();
+            outputFrame.write(data.output);
+            outputFrame.close();
+
+            let outputDoc = outputFrame.body;
+            outputDoc.style.color = "lightgreen";
+        })
+        .catch(error => {
+            console.error('Error running the code:', error);
+        });
     });
 
-    // Clear the editor and output
     document.getElementById("clear-button").addEventListener("click", function() {
         editor.setValue("");
         document.getElementById("output-frame").contentWindow.document.open();
         document.getElementById("output-frame").contentWindow.document.close();
     });
 
-    // Download the code file with the appropriate extension
     document.getElementById("download-button").addEventListener("click", function() {
         let code = editor.getValue().trim();
         let extension = "{{ language|lower }}";

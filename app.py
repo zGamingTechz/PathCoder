@@ -8,6 +8,7 @@ from quote import get_random_tip_or_quote
 from resources import return_resources
 import requests
 import keys
+import subprocess
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
@@ -334,6 +335,35 @@ def leaderboard():
 def ide():
     user = User.query.filter(User.email == session['user_email']).first()
     return render_template('ide.html', language=user.language)
+
+
+@app.route('/run_code', methods=['POST'])
+def run_code():
+    code = request.form.get('code')
+    language = request.form.get('language')
+
+    if language == "python":
+        try:
+            result = subprocess.run(
+                ['python', '-c', code],
+                capture_output=True, text=True, timeout=5
+            )
+            output = result.stdout + result.stderr
+        except Exception as e:
+            output = str(e)
+    elif language == "javascript":
+        try:
+            result = subprocess.run(
+                ['node', '-e', code],
+                capture_output=True, text=True, timeout=5
+            )
+            output = result.stdout + result.stderr
+        except Exception as e:
+            output = str(e)
+    else:
+        output = "Unsupported language"
+
+    return jsonify(output=output)
 
 
 if __name__ == "__main__":
