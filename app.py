@@ -332,7 +332,8 @@ def leaderboard():
 
 @app.route('/ide')
 def ide():
-    return render_template('ide.html')
+    user = User.query.filter(User.email == session['user_email']).first()
+    return render_template('ide.html', language=user.language)
 
 
 if __name__ == "__main__":

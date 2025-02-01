@@ -50,7 +50,7 @@ body {
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    height: 75%;
+    height: auto;
 }
 
 /* IDE Header */
@@ -62,98 +62,66 @@ body {
     text-align: center;
 }
 
-/* IDE Main Layout */
-.ide-main {
-    display: flex;
-    gap: 20px;
-    flex-grow: 1;
-}
-
 /* Code Editor */
-.editor-container {
-    flex: 1;
-    background-color: #333;
-    padding: 15px;
-    border-radius: 8px;
+.editor-container h2 {
+    font-size: 1.5rem;
+    color: #00aaff;
+    margin-bottom: 10px;
 }
 
 #code-editor {
     width: 100%;
-    height: 250px;
-    background-color: #222;
+    height: 300px;
+    background-color: #333;
     color: #f1f1f1;
     font-size: 1rem;
-    font-family: monospace;
-    border: none;
-    padding: 10px;
-    border-radius: 6px;
-    resize: none;
-}
-
-/* Output Area */
-.output-container {
-    flex: 1;
-    background-color: #333;
-    padding: 15px;
+    border: 1px solid #555;
     border-radius: 8px;
+    padding: 10px;
+    resize: none;
+    overflow-x: auto;
+    white-space: pre; /* Prevent text wrapping */
 }
 
-#code-output {
-    width: 100%;
-    height: 250px;
-    background-color: #fff;
-    border-radius: 6px;
-    border: none;
-}
-
-/* Controls */
-.ide-controls {
+/* Buttons */
+.buttons-container {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
 }
 
-#run-button, #clear-button {
+.buttons-container button {
     padding: 10px 20px;
-    font-size: 1.1rem;
+    background-color: #00aaff;
+    color: white;
     border: none;
     border-radius: 6px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
-#run-button {
-    background-color: #00aaff;
-    color: white;
-}
-
-#run-button:hover {
+.buttons-container button:hover {
     background-color: #0088cc;
     transform: translateY(-2px);
 }
 
-#clear-button {
-    background-color: #ff4444;
-    color: white;
+/* Output Section */
+.output-container {
+    margin-top: 20px;
 }
 
-#clear-button:hover {
-    background-color: #cc0000;
-    transform: translateY(-2px);
+.output-container h2 {
+    font-size: 1.5rem;
+    color: #00aaff;
+    margin-bottom: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .ide-main {
-        flex-direction: column;
-    }
-
-    #code-editor, #code-output {
-        height: 200px;
-    }
-
-    .ide-controls {
-        flex-direction: column;
-        gap: 10px;
-    }
+#output-frame {
+    width: 100%;
+    height: 300px;
+    background-color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
 }
