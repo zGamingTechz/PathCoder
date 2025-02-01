@@ -330,5 +330,10 @@ def leaderboard():
     return render_template('leaderboard.html', users=users)
 
 
+@app.route('/ide')
+def ide():
+    return render_template('ide.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
