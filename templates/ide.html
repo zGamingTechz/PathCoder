@@ -54,28 +54,46 @@
         let userInput = document.getElementById("user-input").value;
         let language = "{{ language|lower }}";
 
-        // Send the code to the backend via AJAX
-        fetch('/run_code', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `code=${encodeURIComponent(code)}&language=${encodeURIComponent(language)}&input=${encodeURIComponent(userInput)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            let outputFrame = document.getElementById("output-frame").contentWindow.document;
-            outputFrame.open();
-            outputFrame.write(data.output);
-            outputFrame.close();
+        if (language == "javascript" || language == "js") {
+            // Run JavaScript code inside the iframe
+            let outputFrame = document.getElementById("output-frame");
+            let iframeDoc = outputFrame.contentWindow.document;
 
-            let outputDoc = outputFrame.body;
-            outputDoc.style.color = "lightgreen";
-        })
-        .catch(error => {
-            console.error('Error running the code:', error);
-        });
+            // Clear the iframe content before injecting new code
+            iframeDoc.open();
+            iframeDoc.write("<html><body></body></html>");
+            iframeDoc.close();
+
+            // Create a script element and inject the code into the iframe
+            let script = iframeDoc.createElement("script");
+            script.type = "text/javascript";
+            script.text = code;
+            iframeDoc.body.appendChild(script);
+        } else {
+            // Send the code to the backend via AJAX for other languages
+            fetch('/run_code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `code=${encodeURIComponent(code)}&language=${encodeURIComponent(language)}&input=${encodeURIComponent(userInput)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                let outputFrame = document.getElementById("output-frame").contentWindow.document;
+                outputFrame.open();
+                outputFrame.write(data.output);
+                outputFrame.close();
+
+                let outputDoc = outputFrame.body;
+                outputDoc.style.color = "lightgreen";
+            })
+            .catch(error => {
+                console.error('Error running the code:', error);
+            });
+        }
     });
+
 
     document.getElementById("clear-button").addEventListener("click", function() {
         editor.setValue("");

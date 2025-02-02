@@ -343,20 +343,11 @@ def run_code():
     user_input = request.form.get("input", "")
     language = request.form.get('language')
 
-    if language == "python":
+    if language in ["python", 'py', "python3"]:
         try:
             result = subprocess.run(
                 ['python', '-c', code],
                 input=user_input,
-                capture_output=True, text=True, timeout=5
-            )
-            output = result.stdout + result.stderr
-        except Exception as e:
-            output = str(e)
-    elif language == "javascript":
-        try:
-            result = subprocess.run(
-                ['node', '-e', code],
                 capture_output=True, text=True, timeout=5
             )
             output = result.stdout + result.stderr
