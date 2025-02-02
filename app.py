@@ -340,12 +340,14 @@ def ide():
 @app.route('/run_code', methods=['POST'])
 def run_code():
     code = request.form.get('code')
+    user_input = request.form.get("input", "")
     language = request.form.get('language')
 
     if language == "python":
         try:
             result = subprocess.run(
                 ['python', '-c', code],
+                input=user_input,
                 capture_output=True, text=True, timeout=5
             )
             output = result.stdout + result.stderr
