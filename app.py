@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify, Response, stream_with_context
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from datetime import datetime
 from sqlalchemy import desc
 from threading import Thread
@@ -9,12 +10,25 @@ from resources import return_resources
 import requests
 import keys
 import subprocess
+import random
 
+
+# Definitions
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
 app.config['SECRET_KEY'] = keys.secret_key
 db = SQLAlchemy(app)
 url = "https://zenquotes.io/api/random"
+
+
+# Mail Config
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = keys.email
+app.config['MAIL_PASSWORD'] = keys.email_pass
+
+mail = Mail(app)
 
 
 # ToDo database
