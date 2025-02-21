@@ -69,6 +69,15 @@
     <script>
         function sendOTP() {
             let email = document.getElementById('email').value;
+            let otpButton = document.querySelector('.otp-button');
+
+            if (email === "") {
+                alert("Please enter your email first.");
+                return;
+            }
+
+            otpButton.textContent = "Sent";
+            otpButton.disabled = true;
             fetch('/send_otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
