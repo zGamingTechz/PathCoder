@@ -125,10 +125,6 @@ h4 {
     background-color: #0088cc;
 }
 
-.otp-button:active {
-    transform: scale(0.95);
-}
-
 .otp-button {
     position: absolute;
     right: 5px;

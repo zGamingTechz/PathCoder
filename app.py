@@ -103,6 +103,21 @@ def home():
         return redirect(url_for('register'))
 
 
+@app.route('/send_otp', methods=['POST'])
+def send_otp():
+    data = request.get_json()
+    email = data["email"]
+
+    otp = str(random.randint(100000, 999999))
+    session['otp'] = otp
+
+    msg = Message('Your OTP Code', sender='your_email@gmail.com', recipients=[email])
+    msg.body = f'Your OTP code is {otp}. It is valid for 5 minutes.'
+    mail.send(msg)
+
+    return jsonify(otp)
+
+
 @app.route('/questions', methods=['GET', 'POST'])
 def questions():
     user = User.query.filter(User.email == session['user_email']).first()
@@ -174,6 +189,7 @@ def register():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
+        otp = request.form['otp']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         language = request.form['language']
@@ -182,26 +198,29 @@ def register():
 
         existing_user = User.query.filter(User.email == email).first()
         if existing_user is None:
-            new_user = User(
-                name=name,
-                email=email,
-                password=password,
-                language=language,
-                path=path,
-                experience=experience
-            )
+            if otp == session['otp']:
+                new_user = User(
+                    name=name,
+                    email=email,
+                    password=password,
+                    language=language,
+                    path=path,
+                    experience=experience
+                )
 
-            if password != confirm_password:
-                return render_template("register.html")
+                if password != confirm_password:
+                    return render_template("register.html")
 
-            try:
-                db.session.add(new_user)
-                db.session.commit()
-                session['answered'] = False
-                session['user_email'] = email
-                return redirect('/questions')
-            except Exception as e:
-                return f"Error in adding user: {str(e)}"
+                try:
+                    db.session.add(new_user)
+                    db.session.commit()
+                    session['answered'] = False
+                    session['user_email'] = email
+                    return redirect('/questions')
+                except Exception as e:
+                    return f"Error in adding user: {str(e)}"
+            else:
+                return render_template("register.html", error='Incorrect OTP')
         else:
             return render_template("register.html", error='Email already in use')
     else:
