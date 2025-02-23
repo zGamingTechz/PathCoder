@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, jsonify, Response, stream_with_context
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify, Response, stream_with_context, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from datetime import datetime
@@ -7,6 +7,7 @@ from threading import Thread
 from main import ai_response, chatbot_response
 from quote import get_random_tip_or_quote
 from resources import return_resources
+from certificate import generate_certificate
 import requests
 import keys
 import subprocess
@@ -107,7 +108,11 @@ def home():
 def get_certification():
     tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
     if (len(tasks) < 1):
+        user = User.query.filter(User.email == session['user_email']).first()
+        generate_certificate(user.name, user.path, "static/certificate.pdf")
         return send_file("static/certificate.pdf", as_attachment=True)
+    else:
+        return redirect("/")
 
 
 @app.route('/send_otp', methods=['POST'])
