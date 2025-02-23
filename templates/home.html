@@ -13,7 +13,11 @@
         <h1>PathCoder</h1>
     </div>
     <nav class="nav-links">
-        <a href="/certification" class="nav-btn">Get Certification</a>
+        {% if tasks|length < 1 %}
+            <a href="/certification" class="nav-btn">Get Certification 🔓</a>
+        {% else %}
+            <a href="/certification" class="nav-btn">Get Certification 🔒</a>
+        {% endif %}
         <a href="/chatbot" class="nav-btn">AI Mentor</a>
         <a href="/ide" class="nav-btn">Web IDE</a>
         <a href="/chatroom" class="nav-btn">Discussion Room</a>
@@ -58,7 +62,7 @@
         {% if tasks|length < 1 %}
         <div class="no-tasks">
             <h4>Congratulations on completing all the tasks</h4>
-            <a href="/certification" class="nav-btn">Get Certified</a>
+            <a href="/certification" class="nav-btn">Get Certification</a>
         </div>
         {% else %}
         <div class="scrollable-questions">
