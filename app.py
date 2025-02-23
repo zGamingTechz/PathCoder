@@ -103,6 +103,13 @@ def home():
         return redirect(url_for('register'))
 
 
+@app.route('/certification')
+def get_certification():
+    tasks = ToDo.query.filter(ToDo.email == session['user_email']).order_by(ToDo.id).all()
+    if (len(tasks) < 1):
+        return send_file("static/certificate.pdf", as_attachment=True)
+
+
 @app.route('/send_otp', methods=['POST'])
 def send_otp():
     data = request.get_json()
