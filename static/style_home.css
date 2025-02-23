@@ -25,7 +25,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     width: 90%;
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 /* Left Section */
@@ -258,4 +258,31 @@ a.btn.delete:hover {
 .nav-btn:hover {
     background-color: #0088cc;
     transform: scale(1.05);
+}
+
+.no-tasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.no-tasks .nav-btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.no-tasks .nav-btn:hover {
+    background-color: #0056b3;
+}
+
+.no-tasks h4 {
+    margin-bottom: 10px;
 }

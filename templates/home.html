@@ -55,7 +55,10 @@
     <div class="form-container">
         <h2>Your Roadmap Tasks</h2>
         {% if tasks|length < 1 %}
-        <h4 style="text-align: center; color: #cccccc;">No Tasks Yet</h4>
+        <div class="no-tasks">
+            <h4>Congratulations on completing all the tasks</h4>
+            <a href="/certification" class="nav-btn">Get Certified</a>
+        </div>
         {% else %}
         <div class="scrollable-questions">
             <table>
