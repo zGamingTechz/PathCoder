@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style_projects.css') }}">
+<title>Projects</title>
+{% endblock %}
+
+{% block body %}
+<a href="/" class="back-button">Back</a>
+
+<div class="projects-container">
+    <div class="projects-header">
+        <h1>Projects</h1>
+    </div>
+
+    <div class="projects-list">
+        {% for project in projects %}
+        <div class="project-card">
+            <h2 class="project-title">{{ project.name }}</h2>
+            <p class="project-desc">{{ project.desc }}</p>
+            <a href="{{ project.link }}" target="_blank" class="project-link">View Project</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
