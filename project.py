@@ -220,81 +220,58 @@ projects = {
             "link": "https://youtu.be/s5-8yeYJV7Y?si=AZyCX8DZRU7VkON-"
         },
     ],
-    '': [
+    'Blockchain Developer': [
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Blockchain-Based Voting System",
+            "desc": "Develop a secure, transparent voting platform leveraging blockchain technology to ensure tamper-proof electoral processes",
+            "link": "https://youtu.be/gFowWMFbVeQ?si=LOeqobcBmQuojjvf"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Token Creation on Ethereum",
+            "desc": "Create and deploy your own ERC-20 token on the Ethereum blockchain",
+            "link": "https://youtu.be/88-hpZE4OU8?si=zNIHvl3Yo1IsyqKa"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-    ],
-    '': [
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Decentralized Finance (DeFi) Application",
+            "desc": "Build a DeFi app that allows users to lend and borrow cryptocurrencies",
+            "link": "https://youtu.be/Z5z2F10wQlM?si=u73ZCVGDJE233_iE"
         },
     ],
-    '': [
+    'QA Engineer': [
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Automated Web Application Testing with Selenium",
+            "desc": "Develop automated test scripts using Selenium to validate web application functionality across different browsers",
+            "link": "https://youtu.be/XIcOWh_psSI?si=uFhcOSlg0uZLi2rZ"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Continuous Integration Pipeline with Jenkins",
+            "desc": "Set up a CI pipeline that automates testing and deployment processes using Jenkins",
+            "link": "https://youtu.be/mk2FBuTMwDc?si=AwxZBCIkggA57j0D"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-    ],
-    '': [
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Mobile Application Testing with Appium",
+            "desc": "Create automated tests for mobile applications on Android and iOS platforms using Appium",
+            "link": "https://www.youtube.com/watch?v=oT7HgffjKhU&list=PL92uS5h1oh7chaM5cuyPfmxtTLIDP3fvg"
         },
     ],
+    'Systems Architect': [
+        {
+            "name": "Build Your Own Operating System",
+            "desc": "Create a simple custom OS from scratch with memory management, process scheduling, and file systems",
+            "link": "https://www.youtube.com/watch?v=9t-SPC7Tczc&list=PLFjM7v6KGMpiH2G-kT781ByCNC_0pKpPN"
+        },
+        {
+            "name": "Design a New Programming Language",
+            "desc": "Develop a new high-level programming language, including lexing, parsing, and compiling into bytecode or machine code",
+            "link": "https://craftinginterpreters.com/"
+        },
+        {
+            "name": "Write Your Own 64-bit Operating System Kernel",
+            "desc": "Develop a custom 64-bit OS kernel from scratch, including memory management, multitasking, and basic drivers",
+            "link": "https://youtu.be/FkrpUaGThTQ?si=w88fZG4mhX834vZh"
+        },
+    ]
 }
 
 def get_projects(path):
     return projects[path]
-
-'''a = get_projects("data_science")
-for i in a:
-    print(i["name"])
-    print(i["desc"])
-    print(i["link"])'''
