@@ -8,6 +8,7 @@ from main import ai_response, chatbot_response
 from quote import get_random_tip_or_quote
 from resources import return_resources
 from certificate import generate_certificate
+from project import get_projects
 import requests
 import keys
 import subprocess
@@ -102,6 +103,15 @@ def home():
         elif 'answered' in session and not session['answered']:
             return redirect(url_for('questions'))
         return redirect(url_for('register'))
+
+
+@app.route('/projects')
+def projects():
+    user = User.query.filter(User.email == session['user_email']).first()
+    path = user.path
+    projects = get_projects(path=path)
+
+    return render_template('projects.html', projects=projects)
 
 
 @app.route('/certification')
