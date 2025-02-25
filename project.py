@@ -118,55 +118,106 @@ projects = {
             "link": "https://youtu.be/U6ieiJAhXQ4?si=3Lo3t0QIrZbKR8wf"
         },
     ],
-    '': [
+    'Machine Learning Engineer': [
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Real-Time Speech Emotion Recognition",
+            "desc": "Implement a system that analyzes audio inputs to detect and classify human emotions in real-time",
+            "link": "https://youtu.be/mYUyaKmvu6Y?si=m6wfERvg5UBmFXpH"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "AI-Based Video Summarization",
+            "desc": "Use NLP and computer vision to generate short summaries of long videos automatically",
+            "link": "https://www.researchgate.net/publication/370509071_NLP_based_Video_Summarisation_using_Machine_Learning"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-    ],
-    '': [
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
-        },
-        {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "AI-Powered Code Autocompletion",
+            "desc": "Train a deep learning model to predict and autocomplete code snippets in various coding languages",
+            "link": "https://link.springer.com/article/10.1007/s40747-022-00708-7"
         },
     ],
-    '': [
+    'Software Engineer': [
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Blockchain-Based Voting System",
+            "desc": "Develop a secure, transparent voting platform leveraging blockchain technology to ensure tamper-proof electoral processes",
+            "link": "https://youtu.be/gFowWMFbVeQ?si=LOeqobcBmQuojjvf"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "AI-Powered Content Recommendation System",
+            "desc": "Create a recommendation engine that analyzes user behavior to suggest personalized content using machine learning algorithms",
+            "link": "https://youtu.be/SF1ZlRjVsxw?si=zV1Tgaa0jZKJN3OE"
         },
         {
-            "name": "",
-            "desc": "",
-            "link": ""
+            "name": "Real-Time Collaborative Text Editor",
+            "desc": "Build a web-based text editor enabling multiple users to edit documents simultaneously with real-time updates",
+            "link": "https://youtu.be/r_rCZiy3oIk?si=0Kf36KP-ED8R2Cxj"
+        },
+    ],
+    'Game Developer': [
+        {
+            "name": "2D Platformer Game in Unity",
+            "desc": "Develop a 2D platformer game featuring character movement, jumping mechanics, and interactive obstacles using Unity",
+            "link": "https://youtu.be/HAvfA1F3qTo?si=T3IN1qde_OsGKEtd"
+        },
+        {
+            "name": "2D Space Shooter Game with Pygame",
+            "desc": "Create a classic 2D space shooter game where players control a spaceship to defeat enemies, utilizing Python's Pygame library",
+            "link": "https://youtu.be/fvDokkkRhl0?si=MFOaweihZAl0ZCFs"
+        },
+        {
+            "name": "Multiplayer FPS Game in Unity",
+            "desc": "Develop a fast-paced multiplayer first-person shooter using Unity 3D",
+            "link": "https://youtu.be/UK57qdq_lak?si=E4g6-Jlxo8uKztxo"
+        },
+    ],
+    'Cybersecurity Engineer': [
+        {
+            "name": "Keylogger Software",
+            "desc": "Develop a program that records keystrokes to monitor user activity, enhancing understanding of potential security vulnerabilities",
+            "link": "https://zerotomastery.io/blog/cybersecurity-practice-projects/#Build-a-Keylogger"
+        },
+        {
+            "name": "Network Traffic Analyzer",
+            "desc": "Create a tool to monitor and analyze network traffic, aiding in the detection of suspicious activities and potential threats",
+            "link": "https://youtu.be/xuNuy8n8u-Y?si=qXCA8t_24qz1Ognh"
+        },
+        {
+            "name": "Capture the Flag (CTF) Challenges",
+            "desc": "Participate in CTF competitions to solve security-related tasks, enhancing practical skills in identifying and exploiting vulnerabilities",
+            "link": "https://youtu.be/IxLzldAANNg?si=GWha97KBtmt-IJH6"
+        },
+    ],
+    'Cloud Engineer': [
+        {
+            "name": "Static Website Hosting on Amazon S3",
+            "desc": "Host a static website using Amazon S3, enabling scalable and cost-effective web hosting",
+            "link": "https://youtu.be/cm626PlpSn8?si=lF8QCqg_MFFQeQZK"
+        },
+        {
+            "name": "Host a Virtual Machine on AWS or Azure",
+            "desc": "Deploy and manage a virtual machine (VM) on AWS EC2 or Azure Virtual Machines, configuring networking, storage, and security settings",
+            "link": "https://youtu.be/dP0vNd5K2x8?si=VpC3m3o9YNC3afvN"
+        },
+        {
+            "name": "Train and Deploy a Machine Learning Model on Amazon SageMaker",
+            "desc": "Train a machine learning model using Amazon SageMaker, then deploy it as an API endpoint for real-time predictions",
+            "link": "https://docs.aws.amazon.com/sagemaker/latest/dg/gs-setup-working-env.html"
+        },
+    ],
+    'AI Engineer': [
+        {
+            "name": "AI-Powered Chatbot with GPT-3",
+            "desc": "Develop an intelligent chatbot using OpenAI's GPT-3 to handle dynamic conversations",
+            "link": "https://youtu.be/q5HiD5PNuck?si=cm6BfWLp9d6tk0Q8"
+        },
+        {
+            "name": "Image Caption Generator",
+            "desc": "Create a system that generates descriptive captions for images using deep learning techniques",
+            "link": "https://youtu.be/htNmFL2BG34?si=cnEXyfdelR2mQ2t3"
+        },
+        {
+            "name": "Speech Emotion Recognition System",
+            "desc": "Implement a model that detects and classifies emotions from audio speech inputs",
+            "link": "https://youtu.be/s5-8yeYJV7Y?si=AZyCX8DZRU7VkON-"
         },
     ],
     '': [
